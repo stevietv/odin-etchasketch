@@ -2,18 +2,14 @@ function createGrid(amountBoxes) {
 
     const container = document.querySelector('#sketch');
 
-    for (let indexY = 0; indexY < amountBoxes; indexY++) {
-        let row = document.createElement('div');
-        row.classList.add('row');
+    boxSize = `calc(60vh / ${amountBoxes})`
 
-        for (let indexX = 0; indexX < amountBoxes; indexX++) {
-            let box = document.createElement('div');
-            box.classList.add('box');
-            box.textContent = indexX + 1;
-            row.appendChild(box);
-        }
-
-        container.appendChild(row);
+    for (let index = 0; index < amountBoxes * amountBoxes; index++) {
+        let box = document.createElement('div');
+        box.classList.add('box');
+        box.style.height = boxSize;
+        box.style.width = boxSize;
+        container.appendChild(box);        
     }
 
 }
@@ -21,6 +17,7 @@ function createGrid(amountBoxes) {
 
 function addListeners() {
     const boxes = document.querySelectorAll('.box');
+    console.log(boxes.length)
 
     boxes.forEach(box => {
         box.addEventListener('mouseenter', () => {
