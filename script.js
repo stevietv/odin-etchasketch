@@ -1,39 +1,55 @@
 function createGrid(amountBoxes) {
 
-    const container = document.querySelector('#sketch');
+    setGridSizeButton.textContent = `Set Grid Size - ${amountBoxes}`
 
     boxSize = `calc(60vh / ${amountBoxes})`
+
+    const container = document.querySelector('#sketch');
+    container.replaceChildren();
 
     for (let index = 0; index < amountBoxes * amountBoxes; index++) {
         let box = document.createElement('div');
         box.classList.add('box');
         box.style.height = boxSize;
         box.style.width = boxSize;
-        container.appendChild(box);        
+        container.appendChild(box);
     }
 
+    addBoxListeners();
 }
 
-
-function addListeners() {
+function addBoxListeners() {
     const boxes = document.querySelectorAll('.box');
-    console.log(boxes.length)
 
     boxes.forEach(box => {
         box.addEventListener('mouseenter', () => {
-            box.classList.add('hover');
+            if (isMouseDown) {
+                box.classList.add('hover');
+            }
         })
-        //,
-        // box.addEventListener('mouseleave', () => {
-        //     setTimeout(function() {
-        //         box.classList.remove('hover');
-        //     }, 1000);
-        // })
     })
-
 }
 
+function addButtonListener() {
+    setGridSizeButton.addEventListener('click', setGridSize)
 
+    document.addEventListener('mousedown', () => { isMouseDown = true; }, true);    
+    document.addEventListener('mouseup', () => { isMouseDown = false; }, true);
+}
+
+function setGridSize() {
+    let gridSize = prompt('What size Grid would you like? Enter a number between 1 and 100');
+    gridSize = parseInt(gridSize, 10);
+
+    if (gridSize < 1 || gridSize > 100 || isNaN(gridSize)) {
+        alert('Please enter a number between 1 and 100');
+        return;
+    }
+    createGrid(gridSize);
+}
+
+let isMouseDown = false;
+const setGridSizeButton = document.querySelector('button#setGridSize');
 
 createGrid(16);
-addListeners();
+addButtonListener();
