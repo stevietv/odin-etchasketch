@@ -30,15 +30,16 @@ function addBoxListeners() {
     })
 }
 
-function addButtonListener() {
-    setGridSizeButton.addEventListener('click', setGridSize)
+function addPageListeners() {
+    setGridSizeButton.addEventListener('click', setGridSize);
+    resetButton.addEventListener('click', () => {createGrid(gridSize)});
 
     document.addEventListener('mousedown', () => { isMouseDown = true; }, true);    
     document.addEventListener('mouseup', () => { isMouseDown = false; }, true);
 }
 
 function setGridSize() {
-    let gridSize = prompt('What size Grid would you like? Enter a number between 1 and 100');
+    gridSize = prompt('What size Grid would you like? Enter a number between 1 and 100');
     gridSize = parseInt(gridSize, 10);
 
     if (gridSize < 1 || gridSize > 100 || isNaN(gridSize)) {
@@ -49,7 +50,10 @@ function setGridSize() {
 }
 
 let isMouseDown = false;
+let gridSize = 16;
 const setGridSizeButton = document.querySelector('button#setGridSize');
+const resetButton = document.querySelector('button#reset');
 
-createGrid(16);
-addButtonListener();
+
+createGrid(gridSize);
+addPageListeners();
